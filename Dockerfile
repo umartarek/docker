@@ -4,8 +4,8 @@ FROM python:3.9-slim
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install necessary system dependencies
-RUN apt-get update && apt-get install -y \
+# Update and install necessary system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     mariadb-client \
     redis-server \
     curl \
@@ -16,12 +16,12 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     libmariadb-dev \
     netcat \
-    && apt-get clean
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Bench CLI
 RUN pip install frappe-bench
 
-# Create a working directory for Frappe
+# Set working directory
 WORKDIR /frappe
 
 # Copy the entrypoint script
