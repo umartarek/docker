@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     npm \
     python3-dev \
     libmariadb-dev \
+    netcat \
     && apt-get clean
 
 # Install Bench CLI
