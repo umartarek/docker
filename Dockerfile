@@ -23,15 +23,12 @@ RUN pip install frappe-bench
 # Create a working directory for Frappe
 WORKDIR /frappe
 
-# Initialize Bench and install Frappe
-RUN bench init frappe-bench --frappe-branch version-13 \
-    && cd frappe-bench \
-    && bench new-site frappe.local --mariadb-root-password root --admin-password admin \
-    && bench get-app erpnext --branch version-13 \
-    && bench --site frappe.local install-app erpnext
+# Copy the entrypoint script
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Expose the default Frappe port
 EXPOSE 8000
 
-# Start Frappe
-CMD ["bench", "start"]
+# Use the custom entrypoint script
+ENTRYPOINT ["entrypoint.sh"]
