@@ -1,7 +1,7 @@
-# Use the official Python image as the base
-FROM python:3.9-slim
+# Use an alternative base image
+FROM debian:bullseye-slim
 
-# Set environment variables for non-interactive installation
+# Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and install necessary system dependencies
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     npm \
     python3-dev \
-    libmariadb-dev \
+    default-libmysqlclient-dev \
     netcat \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
